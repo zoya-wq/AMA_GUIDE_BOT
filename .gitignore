@@ -1,0 +1,14 @@
+.env
+v/
+.streamlit/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+*.pdf
+.pytest_cache/
+htmlcov/
+.coverage
