@@ -1,0 +1,16 @@
+streamlit
+azure-ai-documentintelligence
+azure-identity
+pymongo
+qdrant-client
+openai
+python-dotenv
+pypdf
+pandas
+numpy
+tiktoken
+langchain
+tenacity
+plotly
+rich
+llama-parse
