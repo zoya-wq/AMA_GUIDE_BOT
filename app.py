@@ -7,9 +7,13 @@ import pandas as pd
 import plotly.graph_objects as go
 from pathlib import Path
 import sys
+from dotenv import load_dotenv
 
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+# Load environment variables from .env file
+load_dotenv()
 
 from ingestion_pipeline import AMAGuidesIngestionPipeline
 from retrieval_engine import AMARetrievalEngine
@@ -94,53 +98,7 @@ async def run_ingestion_with_progress(pdf_bytes, progress_callback):
 def main():
     # Sidebar for configuration
     with st.sidebar:
-        st.markdown("## Configuration")
-        
-        # Document intelligence credentials (Azure / LlamaParse)
-        with st.expander("Document Parsing Credential", expanded=False):
-            use_llama = st.checkbox("Use LlamaParse", value=os.getenv("USE_LLAMA_PARSE", "false").lower() == "true")
-            llama_key = st.text_input(
-                "LlamaParse API Key",
-                type="password",
-                value=os.getenv("LLAMA_CLOUD_API_KEY", "")
-            )
-            st.write("-- OR --")
-            doc_intelligence_endpoint = st.text_input(
-                "Azure Document Intelligence Endpoint",
-                type="password",
-                value=os.getenv("AZURE_DOC_INTELLIGENCE_ENDPOINT", "")
-            )
-            doc_intelligence_key = st.text_input(
-                "Azure Document Intelligence Key",
-                type="password",
-                value=os.getenv("AZURE_DOC_INTELLIGENCE_KEY", "")
-            )
-            openai_endpoint = st.text_input(
-                "Azure OpenAI Endpoint",
-                type="password",
-                value=os.getenv("AZURE_OPENAI_ENDPOINT", "")
-            )
-            openai_key = st.text_input(
-                "Azure OpenAI Key",
-                type="password",
-                value=os.getenv("AZURE_OPENAI_KEY", "")
-            )
-            cosmos_connection = st.text_input(
-                "Cosmos DB Connection String",
-                type="password",
-                value=os.getenv("AZURE_COSMOS_CONNECTION_STRING", "")
-            )
 
-            # Persist overrides to environment for current runtime
-            os.environ["USE_LLAMA_PARSE"] = str(use_llama).lower()
-            os.environ["LLAMA_CLOUD_API_KEY"] = llama_key
-            os.environ["AZURE_DOC_INTELLIGENCE_ENDPOINT"] = doc_intelligence_endpoint
-            os.environ["AZURE_DOC_INTELLIGENCE_KEY"] = doc_intelligence_key
-            os.environ["AZURE_OPENAI_ENDPOINT"] = openai_endpoint
-            os.environ["AZURE_OPENAI_KEY"] = openai_key
-            os.environ["AZURE_COSMOS_CONNECTION_STRING"] = cosmos_connection
-
-        st.markdown("---")
         st.markdown("### System Status")
         
         if st.session_state.ingestion_complete:
